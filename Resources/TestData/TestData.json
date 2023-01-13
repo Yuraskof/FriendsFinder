@@ -1,13 +1,5 @@
 {
-  "Url": "localhost:8080/web",
-  "ApiHost": "http://localhost:8080/api/",
-  "DatabaseHost": "localhost",
-  "DatabaseUser": "",
-  "DatabasePassword": "",
-  "DatabaseName": "union_reporting",
-  "Variant": "1",
-  "ProjectName": "Nexage",
-  "DateTimeFormat": "yyyy/MM/dd hh:mm:ss",
-  "ImageContentType": "image/png",
-  "MaxSecondsForWhileExecution": "10"
+  "Url": "https://www.linkedin.com/",
+  "SearchText": ".net developer", // .net developer qa automation
+  "Message": "Hi! I want to expand my professional network and be glad to keep in touch with you."
 }

@@ -28,55 +28,55 @@ namespace LinkedInFriend.Utilities
             }
         }
 
-        public static string ConvertDateTime(string date)
-        {
-            LoggerUtils.Logger.Info(string.Format("Start converting {0}", date));
-            DateTime dateTime = Convert.ToDateTime(date);
-            return dateTime.ToString(FileUtils.TestData.DateTimeFormat);
-        }
+        //public static string ConvertDateTime(string date)
+        //{
+        //    LoggerUtils.Logger.Info(string.Format("Start converting {0}", date));
+        //    DateTime dateTime = Convert.ToDateTime(date);
+        //    return dateTime.ToString(FileUtils.TestData.DateTimeFormat);
+        //}
         
-        public static string CreateGetTestModelSqlRequest(TestModel model)
-        {
-            LoggerUtils.LogStep(nameof(CreateGetTestModelSqlRequest) + " 'Start creating get test model by name sql request'");
-            string request = FileUtils.SqlRequests["getTestInfo"];
-            return request.Replace("{0}", model.Name);
-        }
+        //public static string CreateGetTestModelSqlRequest(TestModel model)
+        //{
+        //    LoggerUtils.LogStep(nameof(CreateGetTestModelSqlRequest) + " 'Start creating get test model by name sql request'");
+        //    string request = FileUtils.SqlRequests["getTestInfo"];
+        //    return request.Replace("{0}", model.Name);
+        //}
 
-        public static string CreateSendAttachmentsSqlRequest(string content, string contentType, int testId)
-        {
-            LoggerUtils.LogStep(nameof(CreateSendAttachmentsSqlRequest) + " 'Start creating Send attachment sql request'");
-            return $"{FileUtils.SqlRequests["addAttachments"]} ('{content}', '{contentType}', {testId})";
-        }
+        //public static string CreateSendAttachmentsSqlRequest(string content, string contentType, int testId)
+        //{
+        //    LoggerUtils.LogStep(nameof(CreateSendAttachmentsSqlRequest) + " 'Start creating Send attachment sql request'");
+        //    return $"{FileUtils.SqlRequests["addAttachments"]} ('{content}', '{contentType}', {testId})";
+        //}
 
-        public static string CreateSendLogsSqlRequest(string content, int testId)
-        {
-            LoggerUtils.LogStep(nameof(CreateSendLogsSqlRequest) + " 'Start creating send logs sql request'");
-            return $"{FileUtils.SqlRequests["addLogs"]} ('{content}', {testId})";
-        }
+        //public static string CreateSendLogsSqlRequest(string content, int testId)
+        //{
+        //    LoggerUtils.LogStep(nameof(CreateSendLogsSqlRequest) + " 'Start creating send logs sql request'");
+        //    return $"{FileUtils.SqlRequests["addLogs"]} ('{content}', {testId})";
+        //}
 
-        public static string CreateSendTestSqlRequest(TestModel model)
-        {
-            LoggerUtils.LogStep(nameof(CreateSendTestSqlRequest) + " 'Start creating Send test  sql request'");
-            return $"{FileUtils.SqlRequests["SendTest"]} ('{model.Name}', {model.ProjectId}, '{model.MethodName}', {model.SessionId}, '{model.Env}', '{model.Browser}')";
-        }
+        //public static string CreateSendTestSqlRequest(TestModel model)
+        //{
+        //    LoggerUtils.LogStep(nameof(CreateSendTestSqlRequest) + " 'Start creating Send test  sql request'");
+        //    return $"{FileUtils.SqlRequests["SendTest"]} ('{model.Name}', {model.ProjectId}, '{model.MethodName}', {model.SessionId}, '{model.Env}', '{model.Browser}')";
+        //}
 
-        public static string CreateSessionSqlRequest(SessionModel model)
-        {
-            LoggerUtils.LogStep(nameof(CreateSessionSqlRequest) + " 'Start creating Set session sql request'");
-            return $"{FileUtils.SqlRequests["CreateSession"]} ('{model.SessionKey} ', {model.BuildNumber})";
-        }
+        //public static string CreateSessionSqlRequest(SessionModel model)
+        //{
+        //    LoggerUtils.LogStep(nameof(CreateSessionSqlRequest) + " 'Start creating Set session sql request'");
+        //    return $"{FileUtils.SqlRequests["CreateSession"]} ('{model.SessionKey} ', {model.BuildNumber})";
+        //}
 
-        public static string CreateGetProjectIdByNameRequest(string name)
-        {
-            LoggerUtils.LogStep(nameof(CreateGetProjectIdByNameRequest) + " 'Start creating get project id sql request'");
-            return $"{FileUtils.SqlRequests["getProjectIdByName"]} '{name}'";
-        }
+        //public static string CreateGetProjectIdByNameRequest(string name)
+        //{
+        //    LoggerUtils.LogStep(nameof(CreateGetProjectIdByNameRequest) + " 'Start creating get project id sql request'");
+        //    return $"{FileUtils.SqlRequests["getProjectIdByName"]} '{name}'";
+        //}
 
-        public static string CreateGetSessionIdRequest(SessionModel model)
-        {
-            LoggerUtils.LogStep(nameof(CreateGetSessionIdRequest) + " 'Start creating get session sql request'");
-            return $"{FileUtils.SqlRequests["getSessionId"]} '{model.SessionKey}'";
-        }
+        //public static string CreateGetSessionIdRequest(SessionModel model)
+        //{
+        //    LoggerUtils.LogStep(nameof(CreateGetSessionIdRequest) + " 'Start creating get session sql request'");
+        //    return $"{FileUtils.SqlRequests["getSessionId"]} '{model.SessionKey}'";
+        //}
 
         public static string ConvertLogsToString()
         {

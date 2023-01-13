@@ -9,13 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Forms\Pages\**" />
-    <EmbeddedResource Remove="Forms\Pages\**" />
-    <None Remove="Forms\Pages\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Constants\StatusCodes.cs" />
+    <Compile Remove="Forms\Pages\ProjectPage.cs" />
+    <Compile Remove="Forms\Pages\TestPage.cs" />
     <Compile Remove="Models\GetAccessTokenModel.cs" />
     <Compile Remove="Models\GetAccessTokenResponseModel.cs" />
     <Compile Remove="Utilities\ApiApplicationRequest.cs" />
@@ -37,6 +33,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\TestData\LoginUser.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\TestData\TestData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

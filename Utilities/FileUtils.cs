@@ -10,8 +10,6 @@ namespace LinkedInFriend.Utilities
     {
         public static readonly TestData TestData = JsonUtils.ReadJsonDataFromPath<TestData>(FileConstants.PathToTestData);
         public static readonly LoginUser LoginUser = JsonUtils.ReadJsonDataFromPath<LoginUser>(FileConstants.PathToLoginUser);
-        public static Dictionary<string, string> SqlRequests = JsonUtils.GetDataFromJson(FileConstants.PathToSqlRequests);
-        public static readonly string SessionId = DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
 
 
         public static void ClearLogFile()

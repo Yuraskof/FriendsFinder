@@ -2,31 +2,37 @@ using System.Diagnostics;
 using Aquality.Selenium.Browsers;
 using LinkedInFriend.Base;
 using LinkedInFriend.Constants;
+using LinkedInFriend.Forms;
+using LinkedInFriend.Forms.Pages;
 using LinkedInFriend.Models;
 using LinkedInFriend.Utilities;
 using OpenQA.Selenium;
 
 namespace LinkedInFriend
 {
-    public class TestWebUiAndDb:BaseTest
+    public class TestWebUi:BaseTest
     {
         [Test(Description = "ET-0001 Checking the website functionality using UI and Database")]
         public void TestWebUiAndDatabase()
         {
-            //GetAccessTokenModel model = ModelUtils.CreateGetAccessTokenModel();
-            //string accessToken = ApiApplicationRequest.GetAccessToken(model);
-            //Assert.NotNull(accessToken, "Acess token should be exist");
-            //LoggerUtils.Logger.Info("Step 1 completed.");
+            AqualityServices.Browser.GoTo(FileUtils.TestData.Url);
+            AqualityServices.Browser.Maximize();
 
-            //AqualityServices.Browser.GoTo(BrowserUtils.CreateUrlWithCredentials());
-            //AqualityServices.Browser.Maximize();
-            //AllProjectsPage allProjectsPage = new();
-            //Assert.IsTrue(allProjectsPage.State.WaitForDisplayed(), $"{allProjectsPage.Name} should be presented");
-            //AqualityServices.Browser.Driver.Manage().Cookies.AddCookie(new Cookie("token", accessToken));
-            //AqualityServices.Browser.Refresh();
-            //string footerText = allProjectsPage.GetFooterText();
-            //Assert.IsTrue(StringUtils.SeparateString(footerText, ':')[1] == FileUtils.TestData.Variant, "Values should be equal");
-            //LoggerUtils.Logger.Info("Step 2 completed.");
+            LoginPage loginPage = new();
+            Assert.IsTrue(loginPage.State.WaitForDisplayed(), $"{loginPage.Name} should be presented");
+            
+            loginPage.AcceptCookies();
+            loginPage.Login(FileUtils.LoginUser.Login, FileUtils.LoginUser.Password);
+
+            MainNavigationForm mainNavigationForm = new MainNavigationForm();
+            Assert.IsTrue(mainNavigationForm.State.WaitForDisplayed(), $"{mainNavigationForm.Name} should be presented");
+            LoggerUtils.Logger.Info("Login successfully completed.");
+
+            mainNavigationForm.SearchText();
+            mainNavigationForm.ExpandAllPeople();
+
+            SearchPage searchPage = new SearchPage();
+            searchPage.GetTextFromButtons();
 
             //allProjectsPage.GoToProjectPage(FileUtils.TestData.ProjectName);
             //ProjectPage projectPage = new();
@@ -58,7 +64,7 @@ namespace LinkedInFriend
 
             //allProjectsPage.GoToProjectPage(EnvironmentUtil.GetProjectName());
             //projectModel.Id = Convert.ToInt32(ResponseParser.ParseToString(DataBaseUtils.SendRequest(StringUtils.CreateGetProjectIdByNameRequest(EnvironmentUtil.GetProjectName()))));
-            
+
             //SessionModel sessionModel = new();
             //sessionModel.BuildNumber = EnvironmentUtil.GetBuildNumber();
             //sessionModel.SessionKey = FileUtils.SessionId;

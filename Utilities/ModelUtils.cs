@@ -27,36 +27,36 @@ namespace LinkedInFriend.Utilities
             return true;
         }
 
-        public static bool IsDbContainsModelsFromPage(List<TestModel> modelsFromPage, List<TestModel> modelsFromDb)
-        {
-            LoggerUtils.LogStep(nameof(GetCountOfModelsWithSameFields) + " 'Start comparing models from database and from the page'");
-            return GetCountOfModelsWithSameFields(modelsFromPage, modelsFromDb) == modelsFromPage.Count;
-        }
+        //public static bool IsDbContainsModelsFromPage(List<TestModel> modelsFromPage, List<TestModel> modelsFromDb)
+        //{
+        //    LoggerUtils.LogStep(nameof(GetCountOfModelsWithSameFields) + " 'Start comparing models from database and from the page'");
+        //    return GetCountOfModelsWithSameFields(modelsFromPage, modelsFromDb) == modelsFromPage.Count;
+        //}
 
-        private static int GetCountOfModelsWithSameFields(List<TestModel> modelsFromPage, List<TestModel> modelsFromDb)
-        {
-            LoggerUtils.Logger.Info(nameof(GetCountOfModelsWithSameFields));
-            int matchesCount = 0;
+        //private static int GetCountOfModelsWithSameFields(List<TestModel> modelsFromPage, List<TestModel> modelsFromDb)
+        //{
+        //    LoggerUtils.Logger.Info(nameof(GetCountOfModelsWithSameFields));
+        //    int matchesCount = 0;
 
-            for (int i = 0; i < modelsFromPage.Count; i++)
-            {
-                foreach (var dbModel in modelsFromDb)
-                {
-                    if (IsModelsHaveEqualNameAndDate(dbModel, modelsFromPage[i]))
-                    {
-                        matchesCount++;
-                        break;
-                    }
-                }
-            }
-            return matchesCount;
-        }
+        //    for (int i = 0; i < modelsFromPage.Count; i++)
+        //    {
+        //        foreach (var dbModel in modelsFromDb)
+        //        {
+        //            if (IsModelsHaveEqualNameAndDate(dbModel, modelsFromPage[i]))
+        //            {
+        //                matchesCount++;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    return matchesCount;
+        //}
 
-        private static bool IsModelsHaveEqualNameAndDate(TestModel modelFromDb, TestModel modelFromPage)
-        {
-            LoggerUtils.Logger.Info(nameof(IsModelsHaveEqualNameAndDate) + $" 'Compare names [{modelFromDb.Name}] - [{modelFromPage.Name}]; Compare start time [{modelFromDb.StartTime}] - [{modelFromPage.StartTime}]'");
-            modelFromPage.StartTime = StringUtils.ConvertDateTime(modelFromPage.StartTime);
-            return modelFromDb.Name == modelFromPage.Name && modelFromDb.StartTime == modelFromPage.StartTime;
-        }
+        //private static bool IsModelsHaveEqualNameAndDate(TestModel modelFromDb, TestModel modelFromPage)
+        //{
+        //    LoggerUtils.Logger.Info(nameof(IsModelsHaveEqualNameAndDate) + $" 'Compare names [{modelFromDb.Name}] - [{modelFromPage.Name}]; Compare start time [{modelFromDb.StartTime}] - [{modelFromPage.StartTime}]'");
+        //    modelFromPage.StartTime = StringUtils.ConvertDateTime(modelFromPage.StartTime);
+        //    return modelFromDb.Name == modelFromPage.Name && modelFromDb.StartTime == modelFromPage.StartTime;
+        //}
     }
 }
