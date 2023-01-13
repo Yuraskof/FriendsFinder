@@ -1,0 +1,10 @@
+{
+  "projectId1Tests": "SELECT  id, project_id, name, status_id, method_name, session_id, start_time, end_time, env, browser FROM test WHERE project_id = '1' ORDER BY start_time DESC",
+  "SendTest": "INSERT test(name, project_id, method_name, session_id, env, browser) VALUES ",
+  "CreateSession": "INSERT session(session_key, build_number) VALUES ",
+  "getProjectIdByName": "SELECT id FROM project  WHERE name = ",
+  "getSessionId": "SELECT id FROM session  WHERE session_key = ",
+  "addAttachments": "INSERT attachment(content, content_type, test_id) VALUES ",
+  "addLogs": "INSERT log(content, test_id) VALUES ",
+  "getTestInfo": "SELECT  id, project_id, name, status_id, method_name, session_id, start_time, end_time, env, browser FROM test WHERE name = '{0}' ORDER BY start_time DESC"
+}
