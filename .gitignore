@@ -397,4 +397,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /ExamTaskDockerUiDb/Resources/VisualDumps/TestPage/screenshot.png
-/Forms/Pages/LoginPage.cs
+/Contacts.db
+/exScreen.jpg
+/LiteDB.Studio.exe - Shortcut.lnk
+#/TestData/LoginUser.json

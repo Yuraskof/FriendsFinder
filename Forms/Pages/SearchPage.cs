@@ -1,6 +1,8 @@
-﻿using Aquality.Selenium.Core.Elements;
+﻿using Aquality.Selenium.Browsers;
+using Aquality.Selenium.Core.Elements;
 using Aquality.Selenium.Elements.Interfaces;
 using Aquality.Selenium.Forms;
+using LinkedInFriend.Utilities;
 using OpenQA.Selenium;
 
 namespace LinkedInFriend.Forms.Pages
@@ -8,6 +10,8 @@ namespace LinkedInFriend.Forms.Pages
     public class SearchPage : Form
     {
         private IList<IButton> AllButtons => FormElement.FindChildElements<IButton>(By.XPath("//span[@class = 'artdeco-button__text']"), expectedCount: ElementsCount.MoreThenZero);
+        private IButton NextButton => ElementFactory.GetButton(By.XPath("//button[contains(@aria-label, 'Next')]"), "Next button");
+        
 
         private InvitationForm invitationForm = new InvitationForm();
 
@@ -15,50 +19,44 @@ namespace LinkedInFriend.Forms.Pages
         {
         }
 
-        public void GetTextFromButtons()
+        public void AddContacts()
         {
-            Random random = new Random();
 
-            foreach (var button in AllButtons)
+            Random random = new Random();
+            int invitationsSendCounter = 0;
+
+            try
             {
-                if (button.Text == "Connect")
+                while (invitationsSendCounter < FileUtils.TestData.MaxInvitationsCount)
                 {
-                    button.Click();
-                    invitationForm.SendInvitation();
-                    int timer = random.Next(4, 10);
-                    Thread.Sleep(timer);
+                    foreach (var button in AllButtons)
+                    {
+                        if (button.Text == "Connect")
+                        {
+                            button.Click();
+                            invitationForm.SendInvitation();
+                            int timer = random.Next(2000, 5000);
+                            Thread.Sleep(timer);
+                            invitationsSendCounter++;
+                        }
+                    }
+
+                    AllButtons[^1].JsActions.ScrollIntoView();
+                    GoToTheNextPage();
                 }
             }
+            catch (Exception e)
+            {
+                AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile("../../../exScreen.jpg");
+                Logger.Error(e.Message + " See screenshot");
+            }
+            
         }
 
-        //public List<TestModel> GetTestsNames()
-        //{
-        //    List<TestModel> testModels = new List<TestModel>();
-
-        //    foreach (var testRow in TestsRows)
-        //    {
-        //        TestModel testModel = new TestModel();
-        //        ITextBox testName = testRow.FindChildElement<ITextBox>(By.XPath("//a[contains (text(), '')]"));
-        //        string name = testName.GetText();
-        //        testModel.Name = name;
-
-        //        ITextBox testSatrtTime = testRow.FindChildElement<ITextBox>(By.XPath("//td[contains (text(), ':')][1]"));
-        //        string time = testSatrtTime.GetText();
-        //        testModel.StartTime = time;
-        //        testModels.Add(testModel);
-        //    }
-        //    return testModels;
-        //}
-
-        //public bool IsProjectSuccessfullyAdded(TestModel model)
-        //{
-        //    return TestLink(Convert.ToString(model.Id)).State.WaitForEnabled();
-        //}
-
-        //public void GoToTestPage(TestModel model)
-        //{
-        //    TestLink(Convert.ToString(model.Id)).State.WaitForEnabled();
-        //    TestLink(Convert.ToString(model.Id)).Click();
-        //}
+        private void GoToTheNextPage()
+        {
+            NextButton.State.WaitForEnabled();
+            NextButton.Click();
+        }
     }
 }

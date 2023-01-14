@@ -21,7 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Contacts.db" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Aquality.Selenium" Version="4.11.0" />
+    <PackageReference Include="LiteDB" Version="5.0.15" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
@@ -33,6 +38,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Contacts.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
