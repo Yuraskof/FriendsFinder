@@ -23,11 +23,21 @@ namespace LinkedInFriend
 
             MainNavigationForm mainNavigationForm = new MainNavigationForm();
 
-            mainNavigationForm.SearchText();
-            mainNavigationForm.ExpandAllPeople();
+            //mainNavigationForm.SearchText();
+            //mainNavigationForm.ExpandAllPeople();
 
-            SearchPage searchPage = new SearchPage();
-            searchPage.AddContacts();
+            //SearchPage searchPage = new SearchPage();
+            //searchPage.AddContacts();
+
+            //LoggerUtils.Logger.Info("Invitations are sent");
+
+            mainNavigationForm.GoToAllMessages();
+
+            MessagesPage messagesPage = new MessagesPage();
+
+            messagesPage.GetMessages();
+
+            messagesPage.SendSecondMessage();
 
         }
     }

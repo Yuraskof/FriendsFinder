@@ -50,7 +50,6 @@ namespace LinkedInFriend.Forms.Pages
                 AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile("../../../exScreen.jpg");
                 Logger.Error(e.Message + " See screenshot");
             }
-            
         }
 
         private void GoToTheNextPage()

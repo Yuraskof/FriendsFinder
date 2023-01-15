@@ -45,8 +45,8 @@ namespace LinkedInFriend.Forms
         {
             SendToTextBox.State.WaitForEnabled();
             string messageWithName = SendToTextBox.Text;
-            string[] splited = messageWithName.Split("to");
-            return splited[2];
+            string[] splited = messageWithName.Split("invitation to");
+            return splited[1];
         }
 
         private string GetName(string name)

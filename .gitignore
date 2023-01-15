@@ -400,4 +400,5 @@ FodyWeavers.xsd
 /Contacts.db
 /exScreen.jpg
 /LiteDB.Studio.exe - Shortcut.lnk
-#/TestData/LoginUser.json
+/Resources/TestData/LoginUser.json
+/Resources/TestData/TestData.json
