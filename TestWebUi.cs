@@ -1,4 +1,5 @@
 using Aquality.Selenium.Browsers;
+using Aquality.Selenium.Core.Logging;
 using LinkedInFriend.Base;
 using LinkedInFriend.Forms;
 using LinkedInFriend.Forms.Pages;
@@ -27,7 +28,19 @@ namespace LinkedInFriend
             //mainNavigationForm.ExpandAllPeople();
 
             //SearchPage searchPage = new SearchPage();
-            //searchPage.AddContacts();
+
+            //try
+            //{
+            //    searchPage.AddContacts();
+            //}
+            //catch (Exception e)
+            //{
+            //    AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile($"../../../exScreen{DateTime.Now.Millisecond}.jpg");
+            //    LoggerUtils.Logger.Error(e.Message + " See screenshot");
+            //    AqualityServices.Browser.Refresh();
+            //    searchPage.AddContacts();
+            //}
+            
 
             //LoggerUtils.Logger.Info("Invitations are sent");
 

@@ -3,6 +3,7 @@ using Aquality.Selenium.Forms;
 using LinkedInFriend.Utilities;
 using LiteDB;
 using OpenQA.Selenium;
+using System.Xml.Linq;
 
 
 namespace LinkedInFriend.Forms
@@ -22,37 +23,55 @@ namespace LinkedInFriend.Forms
 
         public void SendInvitation()
         {
-            string fullName = GetFullName();
-
-            if (IsContactExistInDb(fullName))
+            try
             {
-                CloseButton.State.WaitForEnabled();
-                CloseButton.Click();
-                return;
+                string fullName = GetFullName();
+
+                if (IsContactExistInDb(fullName))
+                {
+                    CloseButton.State.WaitForEnabled();
+                    CloseButton.Click();
+                    return;
+                }
+
+                string name = GetName(fullName);
+
+                AddNoteButton.State.WaitForEnabled();
+                AddNoteButton.Click();
+                MessageTextBox.SendKeys($"{FileUtils.TestData.OpenerMessage} {name}! {FileUtils.TestData.Message}");
+                SendButton.State.WaitForEnabled();
+                SendButton.Click();
+                SaveContact(fullName);
             }
-
-            string name = GetName(fullName);
-
-            AddNoteButton.State.WaitForEnabled();
-            AddNoteButton.Click();
-            MessageTextBox.SendKeys($"{FileUtils.TestData.OpenerMessage} {name}! {FileUtils.TestData.Message}");
-            SendButton.State.WaitForEnabled();
-            SendButton.Click();
-            SaveContact(fullName);
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                throw;
+            }
         }
 
         private string GetFullName()
         {
-            SendToTextBox.State.WaitForEnabled();
+            try
+            {
+                SendToTextBox.State.WaitForEnabled();
+            }
+            catch (Exception e)
+            {
+                CloseButton.Click();
+                throw;
+            }
+
+            //SendToTextBox.State.WaitForEnabled();
             string messageWithName = SendToTextBox.Text;
             string[] splited = messageWithName.Split("invitation to");
-            return splited[1];
+            return splited[1].Trim();
         }
 
         private string GetName(string name)
         {
             string[] splitedName = name.Split(" ");
-            return splitedName[1];
+            return splitedName[0];
         }
 
         public void SaveContact(string contactName)
@@ -75,17 +94,16 @@ namespace LinkedInFriend.Forms
             using (var db = new LiteDatabase(@"Filename = ../../../Contacts.db; connection = shared"))
             {
                 // Get a collection (or create, if doesn't exist)
-                var col = db.GetCollection<Contact>("Contacts").FindAll();
+                var col = db.GetCollection<Contact>("Contacts"); //.FindAll();
 
-                foreach (var contact in col)
+                var contact = col.FindOne(x => x.Name == contactName);
+
+                if (contact == null)
                 {
-                    if (contactName.Contains(contact.Name))
-                    {
-                        return true;
-                    }
+                    return false;
                 }
 
-                return false;
+                return true;
             }
         }
     }

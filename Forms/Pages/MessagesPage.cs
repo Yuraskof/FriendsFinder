@@ -2,6 +2,7 @@
 using Aquality.Selenium.Elements.Interfaces;
 using Aquality.Selenium.Forms;
 using LinkedInFriend.Utilities;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using OpenQA.Selenium;
 
 namespace LinkedInFriend.Forms.Pages
@@ -30,19 +31,39 @@ namespace LinkedInFriend.Forms.Pages
 
         public void SendSecondMessage()
         {
-            if (UnreadMessages.Count > 0)
-            {
-                foreach (var message in UnreadMessages)
-                {
-                    message.Click();
-                    string firstMessage = AllMessagesInChat[0].Text;
+            int anotherMessages = 0;
 
-                    if (AllMessagesInChat.Count <= 2 && firstMessage.Contains(FileUtils.TestData.Message))
-                    {
-                        MessageTextBox.SendKeys(FileUtils.TestData.Message2);
-                        SendButton.State.WaitForEnabled();
-                        SendButton.Click();
-                    }
+            while(UnreadMessages.Count > 0)
+            {
+                if (UnreadMessages.Count == anotherMessages)
+                {
+                    break;
+                }
+
+                UnreadMessages[0].JsActions.ScrollIntoView();
+                UnreadMessages[0].Click();
+
+                string firstMessage;
+
+                try
+                { 
+                    firstMessage = AllMessagesInChat[0].Text;
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+                
+
+                if (AllMessagesInChat.Count <= 2 && firstMessage.Contains(FileUtils.TestData.Message))
+                {
+                    MessageTextBox.SendKeys(FileUtils.TestData.Message2);
+                    SendButton.State.WaitForEnabled();
+                    SendButton.Click();
+                }
+                else
+                {
+                    anotherMessages++;
                 }
             }
         }
