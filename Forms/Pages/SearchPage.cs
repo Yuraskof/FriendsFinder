@@ -15,6 +15,7 @@ namespace LinkedInFriend.Forms.Pages
         private IButton NextButton => ElementFactory.GetButton(By.XPath("//button[contains(@aria-label, 'Next')]"), "Next button");
         private IList<ITextBox> AllDescriptionTextBoxes => FormElement.FindChildElements<ITextBox>(By.XPath("//span[@class = 'artdeco-button__text']//preceding::div[contains(@class,\"entity-result__primary-subtitle\")]"), expectedCount: ElementsCount.MoreThenZero);
         private IList<ITextBox> AllSummaryTextBoxes => FormElement.FindChildElements<ITextBox>(By.XPath("//span[@class = 'artdeco-button__text']//preceding::p[contains(@class,\"entity-result__summary\")]"), expectedCount: ElementsCount.MoreThenZero);
+        private IButton CloseMessageButton => ElementFactory.GetButton(By.XPath("//button[contains(@class, \"msg-overlay-bubble-header__control\")]//li-icon[@type = \"close\"]"), "Close message button");
 
         private InvitationForm invitationForm = new InvitationForm();
         private string[] IgnoreList = FileUtils.TestData.IgnoreText.Split(",");
@@ -48,7 +49,19 @@ namespace LinkedInFriend.Forms.Pages
                                 continue;
                             }
 
-                            AllButtons[i].Click();
+                            try
+                            {
+                                AllButtons[i].Click();
+                            }
+                            catch (Exception e)
+                            {
+                                CloseMessageButton.State.WaitForEnabled();
+                                CloseMessageButton.Click();
+                                AllButtons[i].State.WaitForEnabled();
+                                AllButtons[i].Click();
+
+                            }
+                            
 
                             try
                             {
@@ -67,6 +80,8 @@ namespace LinkedInFriend.Forms.Pages
 
                     GoToTheNextPage();
                 }
+
+                LoggerUtils.Logger.Info($"Sent {invitationsSendCounter} invitations.");
             }
             catch (Exception e)
             {
@@ -78,8 +93,19 @@ namespace LinkedInFriend.Forms.Pages
 
         private bool IsContainsInIgnoreList(int number)
         {
-            string descriptionText = AllDescriptionTextBoxes[number].Text.ToLower();
-            string summaryText = AllSummaryTextBoxes[number].Text.ToLower();
+            string descriptionText;
+            string summaryText;
+
+            try
+            {
+                 descriptionText = AllDescriptionTextBoxes[number].Text.ToLower();
+                 summaryText = AllSummaryTextBoxes[number].Text.ToLower();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            
 
             foreach (var item in IgnoreList)
             {
@@ -94,9 +120,21 @@ namespace LinkedInFriend.Forms.Pages
 
         private void GoToTheNextPage()
         {
-            AllButtons[^1].JsActions.ScrollIntoView();
-            NextButton.State.WaitForEnabled();
-            NextButton.Click();
+            try
+            {
+                AllButtons[^1].JsActions.ScrollIntoView();
+                NextButton.State.WaitForEnabled();
+                NextButton.Click();
+            }
+            catch (Exception e)
+            {
+                CloseMessageButton.State.WaitForEnabled();
+                CloseMessageButton.Click();
+
+                AllButtons[^1].JsActions.ScrollIntoView();
+                NextButton.State.WaitForEnabled();
+                NextButton.Click();
+            }
         }
     }
 }

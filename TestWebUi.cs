@@ -1,5 +1,4 @@
 using Aquality.Selenium.Browsers;
-using Aquality.Selenium.Core.Logging;
 using LinkedInFriend.Base;
 using LinkedInFriend.Forms;
 using LinkedInFriend.Forms.Pages;
@@ -24,33 +23,33 @@ namespace LinkedInFriend
 
             MainNavigationForm mainNavigationForm = new MainNavigationForm();
 
-            //mainNavigationForm.SearchText();
-            //mainNavigationForm.ExpandAllPeople();
+            mainNavigationForm.SearchText();
+            mainNavigationForm.ExpandAllPeople();
 
-            //SearchPage searchPage = new SearchPage();
+            SearchPage searchPage = new SearchPage();
 
-            //try
-            //{
-            //    searchPage.AddContacts();
-            //}
-            //catch (Exception e)
-            //{
-            //    AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile($"../../../exScreen{DateTime.Now.Millisecond}.jpg");
-            //    LoggerUtils.Logger.Error(e.Message + " See screenshot");
-            //    AqualityServices.Browser.Refresh();
-            //    searchPage.AddContacts();
-            //}
-            
+            try
+            {
+                searchPage.AddContacts();
+            }
+            catch (Exception e)
+            {
+                AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile($"../../../exScreen{DateTime.Now.Millisecond}.jpg");
+                LoggerUtils.Logger.Error(e.Message + " See screenshot");
+                AqualityServices.Browser.Refresh();
+                searchPage.AddContacts();
+            }
 
-            //LoggerUtils.Logger.Info("Invitations are sent");
 
-            mainNavigationForm.GoToAllMessages();
+            LoggerUtils.Logger.Info("Invitations are sent");
 
-            MessagesPage messagesPage = new MessagesPage();
+            //mainNavigationForm.GoToAllMessages();
 
-            messagesPage.GetMessages();
+            //MessagesPage messagesPage = new MessagesPage();
 
-            messagesPage.SendSecondMessage();
+            //messagesPage.GetMessages();
+
+            //messagesPage.SendSecondMessage();
 
         }
     }
