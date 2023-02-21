@@ -34,11 +34,19 @@ namespace LinkedInFriend.Forms.Pages
             {
                 while (invitationsSendCounter < FileUtils.TestData.MaxInvitationsCount)
                 {
-                    if (AllButtons.Count != AllDescriptionTextBoxes.Count || AllButtons.Count != AllSummaryTextBoxes.Count)
+                    try
                     {
-                        GoToTheNextPage();
-                        Logger.Info($"AllButtons.Count = {AllButtons.Count}, AllDescriptionTextBoxes.Count = {AllDescriptionTextBoxes.Count}, AllSummaryTextBoxes.Count = {AllSummaryTextBoxes.Count}");
+                        if (AllButtons.Count != AllDescriptionTextBoxes.Count || AllButtons.Count != AllSummaryTextBoxes.Count)
+                        {
+                            GoToTheNextPage();
+                            Logger.Info($"AllButtons.Count = {AllButtons.Count}, AllDescriptionTextBoxes.Count = {AllDescriptionTextBoxes.Count}, AllSummaryTextBoxes.Count = {AllSummaryTextBoxes.Count}");
+                        }
                     }
+                    catch (Exception e)
+                    {
+                        AqualityServices.Browser.Refresh();
+                    }
+                    
 
                     for (int i = 0; i < AllButtons.Count; i++)
                     {
@@ -85,8 +93,9 @@ namespace LinkedInFriend.Forms.Pages
             }
             catch (Exception e)
             {
-                AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile($"../../../exScreen {DateTime.Now.Millisecond}.jpg");
-                Logger.Error(e.Message + " See screenshot");
+                string screenshotName = DateTime.Now.ToString("dd/MM HH-mm-ss");
+                AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile($"../../../exScreen {screenshotName}.jpg");
+                LoggerUtils.Logger.Error(e.Message + $" See screenshot {screenshotName}");
                 throw;
             }
         }

@@ -45,7 +45,7 @@ namespace LinkedInFriend.Forms
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                CloseButton.Click();
                 throw;
             }
         }

@@ -14,7 +14,7 @@ namespace LinkedInFriend
         {
             AqualityServices.Browser.GoTo(FileUtils.TestData.Url);
             AqualityServices.Browser.Maximize();
-
+            
             LoginPage loginPage = new();
             Assert.IsTrue(loginPage.State.WaitForDisplayed(), $"{loginPage.Name} should be presented");
             
@@ -34,8 +34,9 @@ namespace LinkedInFriend
             }
             catch (Exception e)
             {
-                AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile($"../../../exScreen{DateTime.Now.Millisecond}.jpg");
-                LoggerUtils.Logger.Error(e.Message + " See screenshot");
+                string screenshotName = DateTime.Now.ToString("dd/MM HH-mm-ss");
+                AqualityServices.Browser.Driver.GetScreenshot().SaveAsFile($"../../../exScreen {screenshotName}.jpg");
+                LoggerUtils.Logger.Error(e.Message + $" See screenshot {screenshotName}");
                 AqualityServices.Browser.Refresh();
                 searchPage.AddContacts();
             }
